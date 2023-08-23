@@ -7,9 +7,19 @@ import ProductItem from "./ProductItem";
 // import StarRatings from "react-star-ratings";
 import Image from "next/image";
 import { PRODUCTS } from "@/helper/routes";
+import { useDispatch } from 'react-redux';
+import { addToCart } from "@/features/cartSlice";
 
 export default function ListProduct({ product }) {
   // console.log(data);
+
+  const dispatch = useDispatch();
+
+  const handleAddToCart = (product) => {
+    // console.log(product)
+    dispatch(addToCart(product));
+  };
+
   return (
     <>
       <section className="py-12">
@@ -22,7 +32,7 @@ export default function ListProduct({ product }) {
                 // <ProductItem />
                 const {id, title, price, images, description, category} = product;
                 return (
-                  <article className="border border-gray-200 overflow-hidden bg-white shadow-sm rounded mb-5">
+                  <article key={id} className="border border-gray-200 overflow-hidden bg-white shadow-sm rounded mb-5">
                     <div className="flex flex-col md:flex-row">
                       <div className="md:w-1/4 flex p-3">
                         <div
@@ -45,22 +55,6 @@ export default function ListProduct({ product }) {
                           <Link href={`${PRODUCTS}/${id}`} className="hover:text-blue-600">
                           {product && title}
                           </Link>
-                          {/* <div className="flex flex-wrap items-center space-x-2 mb-2">
-                            <div className="ratings">
-                              <div className="my-1">
-                                <StarRatings
-                                  rating={product && ratings}
-                                  starRatedColor="#ffb829"
-                                  numberOfStars={5}
-                                  starDimension="18px"
-                                  starSpacing="1px"
-                                  name="rating"
-                                />
-                              </div>
-                            </div>
-                            <b className="text-gray-300">•</b>
-                            <span className="ml-1 text-yellow-500">{product && ratings}</span>
-                          </div> */}
                           <p className="text-gray-500 mb-2">
                           {product && description.substring(0, 100)}...
                           </p>
@@ -74,7 +68,7 @@ export default function ListProduct({ product }) {
 
                           <p className="text-green-500">Free Shipping</p>
                           <div className="my-3">
-                            <a className="px-4 py-2 inline-block text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 cursor-pointer">
+                            <a className="px-4 py-2 inline-block text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 cursor-pointer" onClick={() => handleAddToCart(product)}>
                               {" "}
                               Add to Cart{" "}
                             </a>

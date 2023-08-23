@@ -1,8 +1,14 @@
 import React from "react";
 import Search from "./Search";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+
+  const cartItems = useSelector((state) => state.cart);
+
+  console.log("cartItems: ", cartItems)
+
   return (
     <header className="bg-white py-2 border-b">
       <div className="container max-w-screen-xl mx-auto px-4">
@@ -27,7 +33,7 @@ const Header = () => {
             >
               <i className="text-gray-400 w-5 fa fa-shopping-cart"></i>
               <span className="hidden lg:inline ml-1">
-                Cart (<b>0</b>)
+                Cart (<b>{cartItems.length}</b>)
               </span>
             </Link>
             <Link

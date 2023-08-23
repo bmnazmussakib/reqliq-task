@@ -10,7 +10,7 @@ export default function Home() {
   console.log(allProduct)
 
   const getAllProduct = async () => {
-    const response = await axiosClient().get(PRODUCTS)
+    const response = await axiosClient().get(`${PRODUCTS}?offset=0&limit=10`)
     console.log(response)
     if (response?.status === 200) {
       setAllProduct(response?.data)
