@@ -1,5 +1,3 @@
-
-
 import Header from "@/components/layouts/Header";
 import "./globals.css";
 import { Inter } from "next/font/google";
