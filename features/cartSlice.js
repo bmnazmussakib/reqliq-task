@@ -1,14 +1,18 @@
 // cartSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
-const getCartItemsFromLocalStorage = () => {
-  const cartData = localStorage.getItem('cartItems');
-  return cartData ? JSON.parse(cartData) : { items: [], totalPrice: 0 };
-};
+if(typeof window !== 'undefined') {
+  const getCartItemsFromLocalStorage = () => {
+    const cartData = localStorage.getItem('cartItems');
+    return cartData ? JSON.parse(cartData) : { items: [], totalPrice: 0 };
+  };
+  
+  export const setCartItemsToLocalStorage = (items, totalPrice) => {
+    localStorage.setItem("cartItems", JSON.stringify({ items, totalPrice }));
+  };
+  
 
-export const setCartItemsToLocalStorage = (items, totalPrice) => {
-  localStorage.setItem("cartItems", JSON.stringify({ items, totalPrice }));
-};
+}
 
 const calculateTotalPrice = (cartItems) => {
   return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
