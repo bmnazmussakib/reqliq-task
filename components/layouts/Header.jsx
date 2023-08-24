@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 const Header = () => {
 
-  const cartItems = useSelector((state) => state.cart);
+  const cartItems = useSelector(state => state.cart.items);
 
   console.log("cartItems: ", cartItems)
 
@@ -20,7 +20,7 @@ const Header = () => {
                 style={{ height: "50px", width: "60px" }}
                 height="40"
                 width="120"
-                alt="BuyItNow"
+                alt="Repliq"
               />
             </a>
           </div>
@@ -33,7 +33,7 @@ const Header = () => {
             >
               <i className="text-gray-400 w-5 fa fa-shopping-cart"></i>
               <span className="hidden lg:inline ml-1">
-                Cart (<b>{cartItems.length}</b>)
+                Cart (<b>{cartItems? cartItems.length : 0}</b>)
               </span>
             </Link>
             <Link
@@ -48,9 +48,9 @@ const Header = () => {
                 <img className="w-10 h-10 rounded-full" src={"logo192.png"} />
                 <div className="space-y-1 font-medium">
                   <p>
-                    Ghulam
+                    Sakib
                     <time className="block text-sm text-gray-500 dark:text-gray-400">
-                      test@gmail.com
+                      sakib@gmail.com
                     </time>
                   </p>
                 </div>

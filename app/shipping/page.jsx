@@ -1,16 +1,27 @@
 "use client"
-import {useEffect} from "react";
-// import BreadCrumbs from "../layout/BreadCrumbs";
+import {useEffect, useState } from "react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from 'next/navigation';
 
-const Shipping = () => {
 
-  const cartItems = useSelector(state => state.cart.items);
+const Shipping = () => {
+    const cartItems = useSelector(state => state.cart.items);
   const totalPrice = useSelector(state => state.cart.totalPrice);
   const { push } = useRouter();
 
+  const [selectedAddress, setSelectedAddress] = useState(false);
+  console.log(selectedAddress)
+
+  const handleCheckout = () => {
+    if (selectedAddress) {
+      console.log('Order processed successfully.');
+      setSelectedAddress(false);
+    }
+    console.log('Order processed successfully.');
+  };
+
+  
   useEffect(()=>{
     if(cartItems.length === 0){
       push('/');
@@ -19,14 +30,12 @@ const Shipping = () => {
 
   return (
     <div>
-      {/* <BreadCrumbs /> */}
       <section className="py-10 bg-gray-50">
         <div className="container max-w-screen-xl mx-auto px-4">
           <div className="flex flex-col md:flex-row gap-4 lg:gap-8">
             <main className="md:w-2/3">
               <article className="border border-gray-200 bg-white shadow-sm rounded p-4 lg:p-6 mb-5">
                 <h2 class="text-xl font-semibold mb-5">Shipping information</h2>
-
                 <div class="grid sm:grid-cols-2 gap-4 mb-6">
                   <label class="flex p-3 border border-gray-200 rounded-md bg-gray-50 hover:border-blue-400 hover:bg-blue-50 cursor-pointer">
                     <span>
@@ -34,6 +43,7 @@ const Shipping = () => {
                         name="shipping"
                         type="radio"
                         class="h-4 w-4 mt-1"
+                        onChange={() => setSelectedAddress(true)}
                       />
                     </span>
                     <p class="ml-2">
@@ -50,7 +60,7 @@ const Shipping = () => {
                 </div>
 
                 <Link
-                  href="/address/new"
+                 href="/address/new"
                   className="px-4 py-2 inline-block text-blue-600 border border-gray-300 rounded-md hover:bg-gray-100"
                 >
                   <i className="mr-1 fa fa-plus"></i> Add new address
@@ -58,14 +68,14 @@ const Shipping = () => {
 
                 <div className="flex justify-end space-x-2 mt-10">
                   <Link
-                    href="/cart"
+                   href="/cart"
                     className="px-5 py-2 inline-block text-gray-700 bg-white shadow-sm border border-gray-200 rounded-md hover:bg-gray-100 hover:text-blue-600"
                   >
                     Back
                   </Link>
-                  <a className="px-5 py-2 inline-block text-white bg-green-600 border border-transparent rounded-md hover:bg-green-700 cursor-pointer">
+                  <button className="px-5 py-2 inline-block text-white bg-green-600 border border-transparent rounded-md hover:bg-green-700 cursor-pointer" disabled={!selectedAddress} onClick={()=>{handleCheckout}}>
                     Checkout
-                  </a>
+                  </button>
                 </div>
               </article>
             </main>
@@ -75,41 +85,47 @@ const Shipping = () => {
                 <ul>
                   <li className="flex justify-between mb-1">
                     <span>Amount:</span>
-                    <span>$343</span>
+                    <span>${totalPrice}</span>
                   </li>
-                  <li className="flex justify-between mb-1">
+                  {/* <li className="flex justify-between mb-1">
                     <span>Est TAX:</span>
                     <span>$34</span>
-                  </li>
+                  </li> */}
                   <li className="border-t flex justify-between mt-3 pt-3">
                     <span>Total Amount:</span>
-                    <span className="text-gray-900 font-bold">$343</span>
+                    <span className="text-gray-900 font-bold">${totalPrice}</span>
                   </li>
                 </ul>
 
                 <hr className="my-4" />
 
                 <h2 class="text-lg font-semibold mb-3">Items in cart</h2>
-
-                <figure class="flex items-center mb-4 leading-5">
-                  <div>
-                    <div class="block relative w-20 h-20 rounded p-1 border border-gray-200">
-                      <img
-                        width="50"
-                        height="50"
-                        src={"/logo192.png"}
-                        alt="Title"
-                      />
-                      <span class="absolute -top-2 -right-2 w-6 h-6 text-sm text-center flex items-center justify-center text-white bg-gray-400 rounded-full">
-                        3
-                      </span>
-                    </div>
-                  </div>
-                  <figcaption class="ml-3">
-                    <p> product name</p>
-                    <p class="mt-1 text-gray-400">Total: $34</p>
-                  </figcaption>
-                </figure>
+                  {
+                    cartItems && cartItems.map((item) => {
+                        return (
+                        <figure class="flex items-center mb-4 leading-5">
+                            <div>
+                                <div class="block relative w-20 h-20 rounded p-1 border border-gray-200">
+                                <img
+                                    width="50"
+                                    height="50"
+                                    src={item.image}
+                                    alt="Title"
+                                />
+                                <span class="absolute -top-2 -right-2 w-6 h-6 text-sm text-center flex items-center justify-center text-white bg-gray-400 rounded-full">
+                                    {item.quantity}
+                                </span>
+                                </div>
+                            </div>
+                            <figcaption class="ml-3">
+                                <Link href={`/products/${item.id}`}><p>{item.title}</p></Link>
+                                <p class="mt-1 text-gray-400">Total: ${item.price*item.quantity}</p>
+                            </figcaption>
+                        </figure>
+                        )
+                    })
+                  }
+                
               </article>
             </aside>
           </div>

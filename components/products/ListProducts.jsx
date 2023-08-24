@@ -30,7 +30,7 @@ export default function ListProduct({ product }) {
             <main className="md:w-2/3 lg:w-3/4 px-3">
               {product?.map((product) => {
                 // <ProductItem />
-                const {id, title, price, images, description, category} = product;
+                const {id, title, price, image, description, category} = product;
                 return (
                   <article key={id} className="border border-gray-200 overflow-hidden bg-white shadow-sm rounded mb-5">
                     <div className="flex flex-col md:flex-row">
@@ -43,7 +43,7 @@ export default function ListProduct({ product }) {
                           }}
                         >
                           <Image
-                          src={images? images[0]:"/images/default_product.png"}
+                          src={image? image:"/images/default_product.png"}
                           alt="product anme"
                           height="250"
                           width="250"

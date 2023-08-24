@@ -5,7 +5,7 @@ export const axiosClient = (tokenServer = null) => {
   const defaultOptions = {
     baseURL:
       process.env.NEXT_PUBLIC_API_URL ||
-      "https://api.escuelajs.co/api/v1",
+      "https://fakestoreapi.com",
     headers: {
       "Content-Type": "application/json",
     },
