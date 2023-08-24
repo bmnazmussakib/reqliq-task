@@ -7,7 +7,7 @@ if(typeof window !== 'undefined') {
     return cartData ? JSON.parse(cartData) : { items: [], totalPrice: 0 };
   };
   
-  export const setCartItemsToLocalStorage = (items, totalPrice) => {
+  const setCartItemsToLocalStorage = (items, totalPrice) => {
     localStorage.setItem("cartItems", JSON.stringify({ items, totalPrice }));
   };
   
