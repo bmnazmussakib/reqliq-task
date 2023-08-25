@@ -1,7 +1,7 @@
 // cartSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
-if(typeof window !== 'undefined') {
+
   const getCartItemsFromLocalStorage = () => {
     const cartData = localStorage.getItem('cartItems');
     return cartData ? JSON.parse(cartData) : { items: [], totalPrice: 0 };
@@ -12,7 +12,7 @@ if(typeof window !== 'undefined') {
   };
   
 
-}
+
 
 const calculateTotalPrice = (cartItems) => {
   return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
